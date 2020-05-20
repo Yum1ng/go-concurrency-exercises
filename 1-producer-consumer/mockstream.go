@@ -52,7 +52,7 @@ type Tweet struct {
 // IsTalkingAboutGo is a mock process which pretend to be a sophisticated procedure to analyse whether tweet is talking about go or not
 func (t *Tweet) IsTalkingAboutGo() bool {
 	// simulate delay
-	time.Sleep(330 * time.Millisecond)
+	time.Sleep(630 * time.Millisecond)
 
 	hasGolang := strings.Contains(strings.ToLower(t.Text), "golang")
 	hasGopher := strings.Contains(strings.ToLower(t.Text), "gopher")
@@ -64,6 +64,18 @@ var mockdata = []Tweet{
 	{
 		"davecheney",
 		"#golang top tip: if your unit tests import any other package you wrote, including themselves, they're not unit tests.",
+	}, {
+		"beertocode",
+		"Backend developer, doing frontend featuring the eternal struggle of centering something. #coding",
+	}, {
+		"ironzeb",
+		"Re: Popularity of Golang in China: My thinking nowadays is that it had a lot to do with this book and author https://github.com/astaxie/build-web-application-with-golang",
+	}, {
+		"beertocode",
+		"Looking forward to the #gopher meetup in Hsinchu tonight with @ironzeb!",
+	}, {
+		"vampirewalk666",
+		"I just wrote a golang slack bot! It reports the state of github repository. #Slack #golang",
 	}, {
 		"beertocode",
 		"Backend developer, doing frontend featuring the eternal struggle of centering something. #coding",
