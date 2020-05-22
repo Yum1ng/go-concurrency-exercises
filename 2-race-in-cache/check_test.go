@@ -14,9 +14,9 @@ func TestMain(t *testing.T) {
 	cacheLen := len(cache.cache)
 	pagesLen := cache.pages.Len()
 	if cacheLen != CacheSize {
-		t.Errorf("Incorrect cache size %v", cacheLen)
+		t.Errorf("Incorrect cache size cacheLen %v, pagesLen %v", cacheLen, pagesLen)
 	}
 	if pagesLen != CacheSize {
-		t.Errorf("Incorrect pages size %v", pagesLen)
+		t.Errorf("Incorrect pages size pagesLen %v, cacheLen %v", pagesLen, cacheLen)
 	}
 }
