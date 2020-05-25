@@ -26,7 +26,7 @@ func RunMockServer() {
 	time.Sleep(1 * time.Second)
 
 	go createMockRequest(2, longProcess, &u2)
-	time.Sleep(2 * time.Second)
+	time.Sleep(5 * time.Second)
 
 	go createMockRequest(3, shortProcess, &u1)
 	time.Sleep(1 * time.Second)
@@ -37,7 +37,7 @@ func RunMockServer() {
 	wg.Wait()
 }
 
-func createMockRequest(pid int, fn func(), u *User) {
+func createMockRequest(pid int, fn func(chan<- struct{}), u *User) {
 	fmt.Println("UserID:", u.ID, "\tProcess", pid, "started.")
 	res := HandleRequest(fn, u)
 
@@ -50,10 +50,12 @@ func createMockRequest(pid int, fn func(), u *User) {
 	wg.Done()
 }
 
-func shortProcess() {
+func shortProcess(done chan<- struct{}) {
 	time.Sleep(6 * time.Second)
+	done <- struct{}{}
 }
 
-func longProcess() {
-	time.Sleep(11 * time.Second)
+func longProcess(done chan<- struct{}) {
+	time.Sleep(13 * time.Second)
+	done <- struct{}{}
 }
