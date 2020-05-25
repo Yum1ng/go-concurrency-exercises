@@ -13,10 +13,33 @@
 
 package main
 
+import (
+	"fmt"
+	"os"
+	"os/signal"
+	"sync"
+	"syscall"
+)
+
 func main() {
 	// Create a process
 	proc := MockProcess{}
 
+	cancel := make(chan struct{}, 1)
+	sigs := make(chan os.Signal, 1)
+	signal.Notify(sigs, syscall.SIGINT)
+	var wg sync.WaitGroup
+	wg.Add(1)
+	go func() {
+		<-sigs
+		cancel <- struct{}{}
+		signal.Stop(sigs)
+		proc.Stop()
+		wg.Done()
+	}()
 	// Run the process (blocking)
-	proc.Run()
+	proc.Run(cancel)
+	wg.Wait()
+
+	fmt.Println("here")
 }

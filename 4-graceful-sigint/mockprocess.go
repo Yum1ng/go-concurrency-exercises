@@ -18,13 +18,18 @@ type MockProcess struct {
 }
 
 // Run will start the process
-func (m *MockProcess) Run() {
+func (m *MockProcess) Run(cancel <-chan struct{}) {
 	m.isRunning = true
 
 	fmt.Print("Process running..")
 	for {
-		fmt.Print(".")
-		time.Sleep(1 * time.Second)
+		select {
+		case <-cancel:
+			return
+		default:
+			fmt.Print(".")
+			time.Sleep(1 * time.Second)
+		}
 	}
 }
 
